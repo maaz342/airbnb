@@ -6,6 +6,8 @@ import Navbar from './component/navbar/Navbar'
 import ClientOnly from './component/ClientOnly'
 import RegisterModal from '@/app/component/modal/RegisterModal'
 import ToasterProvider from './providers/ToasterProvider'
+import LoginModal from './component/modal/LoginModal'
+import getCurrentUser from './actions/getCurrentUser'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,18 +19,21 @@ const Font=Nunito({
   subsets:["latin"]
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const currentUser= await getCurrentUser();
   return (
     <html lang="en">
       <body className={inter.className}>{children}
       <ClientOnly>
         <ToasterProvider/>
+        <LoginModal />
+
 <RegisterModal />
-      <Navbar/>
+      <Navbar currentUser={currentUser}/>
       </ClientOnly>
       
       {children}

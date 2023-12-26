@@ -1,8 +1,15 @@
-    import Container from"../Container";
+import Container from"../Container";
     import Logo from "./Logo";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
-    const Navbar=()=> {
+import { SafeUser } from "@/app/types";
+interface NavbarProps{
+    currentUser?:SafeUser|null
+}
+const Navbar: React.FC<NavbarProps> = ({
+    currentUser,
+  }) => {
+  
     return (
     <div className="fixed w-full bg-white z-10 shadow-sm">
     <div
@@ -21,7 +28,7 @@ import UserMenu from "./UserMenu";
         >
           <Logo />
           <Search/>
-          <UserMenu/>
+          <UserMenu currentUser={currentUser}/>
       
         </div>
       </Container>
