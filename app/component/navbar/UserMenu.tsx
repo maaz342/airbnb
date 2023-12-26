@@ -11,6 +11,7 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import MenuItem from "./MenuItem";
 import Avatar from "../Avatar";
 import { SafeUser } from "@/app/types";
+import useRentModal from "@/app/hooks/useRentModal";
 
 interface UserMenuProps {
   currentUser?: SafeUser | null
@@ -20,6 +21,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
   currentUser
 }) => {
   const router = useRouter();
+  const rentModal = useRentModal();
 
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
@@ -29,12 +31,18 @@ const UserMenu: React.FC<UserMenuProps> = ({
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
-
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+rentModal.onOpen();
+  }, [loginModal, currentUser,rentModal])
  
   return ( 
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
         <div 
+        onClick={onRent}
           className="
             hidden
             md:block
@@ -107,7 +115,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                   onClick={() => {}}                />
                 <MenuItem 
                   label="Airbnb your home" 
-                  onClick={() => {}}                />
+                  onClick={rentModal.onOpen}                />
                 <hr />
                 <MenuItem 
                   label="Logout" 

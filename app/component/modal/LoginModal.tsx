@@ -57,7 +57,11 @@ const LoginModal = () => {
       }
     });
   }
-    
+  const onToggle = useCallback(() => {
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [loginModal, registerModal])
+
       
       const bodyContent = (
         <div className="flex flex-col gap-4">
@@ -93,7 +97,7 @@ const LoginModal = () => {
             outline 
             label="Continue with Google"
             icon={FcGoogle}
-            onClick={() =>{}} 
+            onClick={() =>signIn('google')} 
           />
           <Button 
             outline 
@@ -109,15 +113,15 @@ const LoginModal = () => {
               font-light
             "
           >
-            <p>Already have an account?
+            <p>First Time using Airbnb?
               <span 
-                onClick={registerModal.onClose} 
+                onClick={onToggle} 
                 className="
                   text-neutral-800
                   cursor-pointer 
                   hover:underline
                 "
-                > Log in</span>
+                > Create An Account</span>
             </p>
           </div>
         </div>
