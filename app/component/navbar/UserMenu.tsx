@@ -102,14 +102,14 @@ rentModal.onOpen();
               <>
                 <MenuItem 
                   label="My trips" 
-                  onClick={() => {}}
+                  onClick={() =>router.push("/trips")}
                 />
                 <MenuItem 
                   label="My favorites" 
-                  onClick={() => {}}                />
+                  onClick={() =>router.push("/favorites")}                />
                 <MenuItem 
                   label="My reservations" 
-                  onClick={() => {}}                />
+                  onClick={() => router.push("/reservations")}                />
                 <MenuItem 
                   label="My properties" 
                   onClick={() => {}}                />
