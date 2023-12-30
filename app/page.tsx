@@ -8,9 +8,9 @@ import getCurrentUser from './actions/getCurrentUser';
 
 
 export default async function Home() {
-  const listing=await getlistings();
+  const listings=await getlistings();
   const CurrentUser=await getCurrentUser();
-  if(listing.length===0){
+  if(listings.length===0){
     return(
       <ClientOnly>
         <EmptyState showReset/>
@@ -33,7 +33,7 @@ export default async function Home() {
               gap-8
             "
           >      
-{listing.map((listing: any) => {
+{listings.map((listing) => {
     return(
           
           <ListingCard
@@ -42,7 +42,8 @@ export default async function Home() {
           data={listing}
         />
   )
-})}    </div>
+})}   
+ </div>
     </Container>
     </ClientOnly>
  )
