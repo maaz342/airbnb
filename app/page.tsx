@@ -1,50 +1,56 @@
-import Image from 'next/image'
-import Container from './component/Container'
-import ClientOnly from './component/ClientOnly'
-import EmptyState from './component/EmptyState';
-import getlistings from './actions/getListing';
-import ListingCard from './component/listing/ListingCard';
-import getCurrentUser from './actions/getCurrentUser';
+import Container from "@/app/component/Container";
+import ListingCard from "@/app/component/listing/ListingCard";
+import EmptyState from "@/app/component/EmptyState";
 
+import getListings, { 
+  IListingsParams
+} from "@/app/actions/getListing";
+import getCurrentUser from "@/app/actions/getCurrentUser";
+import ClientOnly from "./component/ClientOnly";
 
-export default async function Home() {
-  const listings=await getlistings();
-  const CurrentUser=await getCurrentUser();
-  if(listings.length===0){
-    return(
+interface HomeProps {
+  searchParams: IListingsParams
+};
+
+const Home = async ({ searchParams }: HomeProps) => {
+  const listings = await getListings(searchParams);
+  const currentUser = await getCurrentUser();
+
+  if (listings.length === 0) {
+    return (
       <ClientOnly>
-        <EmptyState showReset/>
+        <EmptyState showReset />
       </ClientOnly>
-    )
+    );
   }
+
   return (
-      <ClientOnly>
-        <Container>
-          <div 
-            className="
-              pt-24
-              grid 
-              grid-cols-1 
-              sm:grid-cols-2 
-              md:grid-cols-3 
-              lg:grid-cols-4
-              xl:grid-cols-5
-              2xl:grid-cols-6
-              gap-8
-            "
-          >      
-{listings.map((listing) => {
-    return(
-          
-          <ListingCard
-          currentUser={CurrentUser}
-          key={listing.id}
-          data={listing}
-        />
-  )
-})}   
- </div>
-    </Container>
+    <ClientOnly>
+      <Container>
+        <div 
+          className="
+            pt-24
+            grid 
+            grid-cols-1 
+            sm:grid-cols-2 
+            md:grid-cols-3 
+            lg:grid-cols-4
+            xl:grid-cols-5
+            2xl:grid-cols-6
+            gap-8
+          "
+        >
+          {listings.map((listing: any) => (
+            <ListingCard
+              currentUser={currentUser}
+              key={listing.id}
+              data={listing}
+            />
+          ))}
+        </div>
+      </Container>
     </ClientOnly>
- )
+  )
 }
+
+export default Home;
